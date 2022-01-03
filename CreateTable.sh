@@ -82,17 +82,29 @@ hdata="ColName"$sep"Type"$sep"key"
   #touch ./databases/$1/$tblname
   echo -e $temp >> ./databases/$1/$tblname 
   if [[ $? == 0 ]]
-  then
-    echo "Table et3ml gameeed "
-    temp="";  # empty the var so if another table to be inserted the data dont be overlapped
-    sleep 3 
-    . ./connectdb.sh $1
-    # # 7ot script el main bta3 el tables
+    then
+              echo "Table Created successively"
+              temp="";  # empty the var so if another table to be inserted the data dont be overlapped
+              select x in "create new table" "go to table menu"
+              do
+              case $REPLY in 
+              1 ) . ./CreateTable.sh $1 ;;
+              2 ) . ./connectdb.sh $1 ;;
+              * ) echo "invalid choice pick again"
+              esac
+              done
+
+    
   else
-    echo "table moghad shewaya try again $tblname"
-    sleep 3 
-    . ./connectdb.sh $1
-    # 7ot script el main bta3 el tables
+    echo "Error creating table"
+              select x in "Try again" "go to table menu"
+              do
+              case $REPLY in 
+              1 ) . ./CreateTable.sh $1 ;;
+              2 ) . ./connectdb.sh $1 ;;
+              * ) echo "invalid choice pick again"
+              esac
+              done
   fi
 
 done
