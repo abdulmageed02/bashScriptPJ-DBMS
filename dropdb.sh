@@ -2,17 +2,26 @@
 while [ true ]
 do 
 echo "enter the database name"
-read name
-FILE= ./databases/$name
-if [ -d $FILE ];
+read dbname
+
+if [ -d ./databases/$dbname ];
          then
-            rm -r ./databases/$name 2> /dev/null ; # still gives error thats its a directory need to be handled
+            rm -r ./databases/$dbname  
             echo "Deleted !";
-            break;
+            sleep 1.5
+            . ./maindb.sh
         else 
-            echo "$name database Doesn't exist"
+            echo "$dbname database Doesn't exist"
+            sleep 1.5
+            select c in "go back to main menu " "try again"
+            do
+            case $REPLY in
+            1 ) . ./maindb.sh ;;
+            2 ) . ./dropdb.sh ;;
+            esac
+            done
         fi
-        done
+done
 
  
 
