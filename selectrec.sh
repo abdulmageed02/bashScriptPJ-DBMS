@@ -31,7 +31,7 @@ read name
                         #v=$(awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$value'") print $0}' ./databases/$1/$name)
                         if [[ ! -z $(awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'") print $0}' ./databases/$1/$name) ]];then
                             
-                            awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'" && i=="'$FIELDN'") {print $0}}' ./databases/$1/$name
+                            awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'" && i=="'$FIELDN'") {print $0;exit}}' ./databases/$1/$name
                             
                             select choice in 'Select new record?' 'go back to table menu' 'Delete Record' 'Update Record'
                             do
@@ -40,6 +40,7 @@ read name
                             2 ) . ./connectdb.sh $1 ;;
                             3 ) RECORDN=$(awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'" && i=="'$FIELDN'") {print NR}}' ./databases/$1/$name)
                                 sed -i "$RECORDN"d ./databases/$1/$name
+                                    . ./connectdb.sh $1
                                                 ;;
                             4 )  echo -e "insert new value for the current col value: "
                                 read NewV
@@ -48,6 +49,7 @@ read name
                                 echo $oldValue
                                 sed -i ''$RECORDN's/'$OldV'/'$NewV'/g' ./databases/$1/$name
                                 echo "Row Updated Successfully"
+                                 . ./connectdb.sh $1
                                 ;;
                             * )     echo " invalid choice, pick again please" ;;
                              esac
