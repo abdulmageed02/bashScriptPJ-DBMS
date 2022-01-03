@@ -1,5 +1,6 @@
 #!/bin/bash
-PS3="Make your choice"
+
+PS3="Make your choice ==> "
 
 
 select choice in 'create Database' 'List Database' 'Conncet to Database' 'Drop Database' 'Exit!'
