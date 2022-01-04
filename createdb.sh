@@ -14,11 +14,17 @@ if [[ $name =~ ^[a-z|A-Z]+$  ]];
             echo "$name exists."
             continue 2;
         else 
-            mkdir -p databases/$name   # error stil showing up, need to handle
+            mkdir -p databases/$name   
             echo "$name database created"
-            sleep 3
-            clear 
-            ./maindb.sh $1
+          
+            select c in "create new database " "go back to main menu"
+            do
+            case $REPLY in
+            1 ) . ./createdb.sh  ;;
+            2 ) . ./maindb.sh  ;;
+            esac
+            done
+            
         fi
         done
 	break ;

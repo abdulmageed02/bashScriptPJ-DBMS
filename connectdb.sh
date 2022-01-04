@@ -1,5 +1,4 @@
 #!/bin/bash
-PS3= 'Make your choice> ' 2>/dev/null
 
 while [ true ]
 do 
@@ -37,8 +36,15 @@ if [ -d ./databases/$dbname ];
             done
         
         else 
-            echo "$name database Doesn't exist"
-            sleep 3
-            . ./maindb.sh
+            echo "$dbname database Doesn't exist"
+
+           
+           select c in  "try again" "go back to main menu "
+            do
+            case $REPLY in
+            1 ) . ./connectdb.sh ;;
+            2 ) . ./maindb.sh ;;
+            esac
+            done
         fi
         done

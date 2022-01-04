@@ -7,6 +7,11 @@ else
  echo "no databases to be shown"
 fi
 
-sleep 1.5
+           select c in "go back to main menu" "exit"
+            do
+            case $REPLY in
+            1 ) . ./maindb.sh ;;
+            2 ) exit ;;
+            esac
+            done
 
-. ./maindb.sh
