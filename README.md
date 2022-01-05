@@ -22,7 +22,7 @@ Table Operations:
 
 ### Supported Datatypes:
 * String
-* Number
+* Integer
 
 ## How To Use:
 ```sh
@@ -34,7 +34,8 @@ $ ./maindb.sh
 * you cant use columns with string data type as your primary key
 * you cant insert duplicated primary key or Null primary key
 * you wont be able to select or update null values 
-* you cant enter null values if its string, but you cant do that if its int (use 0 if u want to insert an int as null)
+* you can enter null values if its string
+* you cant insert null values for int columns (use 0 if u want to insert an int as null)
 * you cant insert 0 for the PK 
 ```
 ## Contributors:
