@@ -3,14 +3,14 @@
 echo -e "Table Name: "
 read tblname
 if ! [[ -f ./databases/$1/$tblname ]]; then
-  echo "Table $tblname isn't existed " 
+  echo "Table $tblname isn't existed "
   select x in "insert another Table" "go to table menu"; do
-  case $REPLY in
-  1) . ./insertintotable.sh $1 ;;
-  2) . ./connectdb.sh $1 ;;
-  *) echo"invalid choice pick again " ;;
-  esac
-done
+    case $REPLY in
+    1) . ./insertintotable.sh $1 ;;
+    2) . ./connectdb.sh $1 ;;
+    *) echo"invalid choice pick again " ;;
+    esac
+  done
 fi
 
 coln=$(awk 'END{print NR}' ./databases/$1/.$tblname)
@@ -27,31 +27,29 @@ for ((i = 2; i <= $coln; i++)); do
 
   # Validate Input
 
- 
- 
   if [[ $coltype == "int" ]]; then
     while true; do
       case $data in
 
-      +([0-9]) )
+      +([0-9]))
         if [[ "$colKey" == "PK" ]]; then
           duplicated=0
           while [[ true ]]; do
             if [[ -z "$data" ]]; then
-              echo "Error!PK can't be NULL !"
-              read -p "Enter valid Primary key" data
+              echo -e "\n Error!PK can't be NULL !"
+              read -p "Enter valid Primary key $colname (int) = " data
 
             elif
               ! [[ $data =~ ^[1-9][0-9]*$ ]]
             then
-              echo -e "ErrorInvalid data type! "
-              read -p "Enter valid data type " data
+
+              read -p "Enter valid data type $colname (int) = " data
 
             else
               duplicated=$(awk -F'|' '{if('$data'==$('$i'-1)) {print $('$i'-1);exit}}' ./databases/$1/$tblname)
               if ! [[ $duplicated -eq 0 ]]; then
                 echo "Error!PK already exists"
-                read -p "Enter unique Primary key" data
+                read -p "Enter unique Primary key $colname (int) = " data
                 duplicated=0
               else
                 break
@@ -63,14 +61,11 @@ for ((i = 2; i <= $coln; i++)); do
         break
         ;;
       *)
-        echo "Error! Invalid data type!"
-        read -p "Enter valid data type (int)" data
+        read -p "Enter valid Value pls, $colname (int)= " data
         ;;
       esac
     done
   fi
-
-
 
   #inserting rows into database
   if [[ $i == $coln ]]; then
