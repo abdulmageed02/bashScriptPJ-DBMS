@@ -3,9 +3,14 @@
 echo -e "Table Name: "
 read tblname
 if ! [[ -f ./databases/$1/$tblname ]]; then
-  echo "Table $tblname isn't existed ,choose another Table" # need to be added in while loop
-  sleep 2
-  . ./connectdb.sh $1
+  echo "Table $tblname isn't existed" # need to be added in while loop
+  select x in "insert another Table" "go to table menu"; do
+  case $REPLY in
+  1) . ./insertintotable.sh $1 ;;
+  2) . ./connectdb.sh $1 ;;
+  *) echo"invalid choice pick again" ;;
+  esac
+done
 fi
 
 coln=$(awk 'END{print NR}' ./databases/$1/.$tblname)
@@ -22,13 +27,13 @@ for ((i = 2; i <= $coln; i++)); do
 
   # Validate Input
 
-  # int validation
-  #function intcheck {
+ 
+ 
   if [[ $coltype == "int" ]]; then
     while true; do
       case $data in
 
-      +([0-9]))
+      +([0-9]) )
         if [[ "$colKey" == "PK" ]]; then
           duplicated=0
           while [[ true ]]; do
@@ -54,6 +59,7 @@ for ((i = 2; i <= $coln; i++)); do
             fi
           done
         fi
+        #######
         break
         ;;
       *)

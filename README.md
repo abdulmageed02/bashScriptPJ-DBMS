@@ -32,6 +32,9 @@ $ ./maindb.sh
 ```
 * you cant use columns with string data type as your primary key
 * you cant insert duplicated primary key or Null primary key
+* you wont be able to select or update null values 
+* you cant enter null values if its string, but you cant do that if its int (use 0 if u want to insert an int as null)
+* you cant insert 0 for the PK 
 ```
 ## Contributors:
 * [Hossam Abdulmageed](https://github.com/abdulmageed02)

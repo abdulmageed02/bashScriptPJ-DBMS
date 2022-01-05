@@ -26,6 +26,10 @@ read name
                         do
                         echo "select col value requird "
                         read colv
+                         while [[ -z $colv ]] ;do
+                            echo "you cant search with null value, select col value requird "
+                            read colv
+                            done
                        
                         if [[ ! -z $(awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'") print $0}' ./databases/$1/$name) ]];then
                             
