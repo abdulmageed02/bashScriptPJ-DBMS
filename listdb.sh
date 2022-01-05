@@ -2,7 +2,7 @@
 
 if [  -d databases ]
 then 
- ls databases 2>/dev
+ ls databases 2>/dev/null
 else
  echo "no databases to be shown"
 fi

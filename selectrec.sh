@@ -42,6 +42,16 @@ read name
                              done
                         else
                         echo "not match with $colv"
+                        select choice in 'Select record Again?' 'go back to table menu' 
+                            do
+                            case $REPLY in 
+                            1 ) break;;
+                            2 ) . ./connectdb.sh $1 ;;
+                            * )     echo " invalid choice, pick again please" ;;
+                             esac
+                             done
+
+
                         fi
                         done
                     fi
