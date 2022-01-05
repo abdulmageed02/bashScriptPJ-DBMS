@@ -1,6 +1,6 @@
 # Database Engine USING BASH Script
 
-Database engine that handles simple CRUD tasks on data stored in text files and databases as directories
+Database engine that handles simple CRUD tasks on data stored in text files
 
 
 ## Features:
