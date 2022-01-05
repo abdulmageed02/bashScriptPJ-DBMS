@@ -11,6 +11,15 @@ if [[ -f ./databases/$1/$tblname ]]; then
     . ./connectdb.sh
     else
     echo 'table doesnt exist'
+    select choice in 'List new Record ?' 'go back to table menu' 
+                            do
+                            case $REPLY in 
+                            1 ) break ;;
+                            2 ) . ./connectdb.sh $1 ;;
+                            * )     echo " invalid choice, pick again please" ;;
+                             esac
+                             done
+       
     fi
 done
 

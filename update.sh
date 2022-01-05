@@ -13,18 +13,28 @@ read name
          
                 while true
                 do
-                echo "Please enter Colname "
+                echo "Please enter Column name "
                 read  coln  
              
                FIELDN=$(awk 'BEGIN{FS="|"}{if(NR==1) { for( i=1;i<=NF;i++) if($i=="'$coln'")print i }}' ./databases/$1/$name)
                
                     if [[ -z $(awk 'BEGIN{FS="|"}{if ($1=="'$coln'")print $1}' ./databases/$1/.$name) ]];then
-                    echo 'invalid col name'
+                    echo 'invalid column name'
+                    select choice in 'Select new Column ?' 'go back to table menu' 
+                            do
+                            case $REPLY in 
+                            1 ) break ;;
+                            2 ) . ./connectdb.sh $1 ;;
+                            * )     echo " invalid choice, pick again please" ;;
+                             esac
+                             done
+
+
                     break;
                     else
                         while true 
                         do
-                        echo "select col value requird "
+                        echo "select column value requird "
                         read colv
                          while [[ -z $colv ]] ;do
                             echo "you cant search with null value, select col value requird "
@@ -33,7 +43,7 @@ read name
                        
                         if [[ ! -z $(awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'") print $0}' ./databases/$1/$name) ]];then
                             
-                            echo -e "insert new value for the current col value: "
+                            echo -e "insert new value for the current column value: "
                                 read NewV
 ###################################################  New value validation checking either its string or int also checking on pk as new value
 HN=$FIELDN+1
@@ -89,7 +99,7 @@ colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$HN') print $3}' ./databases/$1/.$tblname)
                                  . ./connectdb.sh $1
                         else
                         echo "not match with $colv"
-                        select choice in 'insert new col value ?' 'go back to table menu' 
+                        select choice in 'insert new column value ?' 'go back to table menu' 
                             do
                             case $REPLY in 
                             1 ) break ;;
@@ -104,6 +114,14 @@ colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$HN') print $3}' ./databases/$1/.$tblname)
         
         else
         echo "this table doesnt exist"
+        select choice in 'Update new table ?' 'go back to table menu' 
+                            do
+                            case $REPLY in 
+                            1 ) break ;;
+                            2 ) . ./connectdb.sh $1 ;;
+                            * )     echo " invalid choice, pick again please" ;;
+                             esac
+                             done
         break;
         fi
     done

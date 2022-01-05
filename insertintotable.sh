@@ -3,12 +3,12 @@
 echo -e "Table Name: "
 read tblname
 if ! [[ -f ./databases/$1/$tblname ]]; then
-  echo "Table $tblname isn't existed" # need to be added in while loop
+  echo "Table $tblname isn't existed " 
   select x in "insert another Table" "go to table menu"; do
   case $REPLY in
   1) . ./insertintotable.sh $1 ;;
   2) . ./connectdb.sh $1 ;;
-  *) echo"invalid choice pick again" ;;
+  *) echo"invalid choice pick again " ;;
   esac
 done
 fi
@@ -44,8 +44,8 @@ for ((i = 2; i <= $coln; i++)); do
             elif
               ! [[ $data =~ ^[1-9][0-9]*$ ]]
             then
-              echo -e "ErrorInvalid data type!  "
-              read -p "Enter valid data type" data
+              echo -e "ErrorInvalid data type! "
+              read -p "Enter valid data type " data
 
             else
               duplicated=$(awk -F'|' '{if('$data'==$('$i'-1)) {print $('$i'-1);exit}}' ./databases/$1/$tblname)
@@ -64,7 +64,7 @@ for ((i = 2; i <= $coln; i++)); do
         ;;
       *)
         echo "Error! Invalid data type!"
-        read -p "enter valid data type (int)" data
+        read -p "Enter valid data type (int)" data
         ;;
       esac
     done
@@ -88,12 +88,11 @@ else
   echo "Error Inserting Data into Table $tblname"
 fi
 row=""
-echo "going to table menu"
 
 select x in "insert new data" "go to table menu"; do
   case $REPLY in
   1) . ./insertintotable.sh $1 ;;
   2) . ./connectdb.sh $1 ;;
-  *) echo"invalid choice pick again" ;;
+  *) echo "invalid choice pick again" ;;
   esac
 done

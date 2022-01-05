@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PS3="please Select: " 
+
+
 while [ true ]
 do 
 if [[ $# == 0 ]];then
@@ -30,7 +33,7 @@ if [ -d ./databases/$dbname ];
             ;;
             7 ) . ./update.sh $dbname ;;
             8 ) . ./Delrec.sh $dbname ;;
-            9 ) . ./connectdb.sh
+            9 ) ./connectdb.sh
             ;;
             10 ) . ./maindb.sh
             ;;

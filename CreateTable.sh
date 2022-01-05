@@ -10,7 +10,7 @@ do
     read tblname   
     if [[ $tblname =~ ^[a-z|A-Z]+$ ]]; then
             if [[ -f ./databases/$1/$tblname ]]; then
-                 echo "table already existed choose another name"
+                 echo "Table already exists , Choose another name "
                  # rg3o 3la el table menu  #lsa h3mlo 
                  . ./connectdb.sh $1
                  continue;
@@ -20,7 +20,7 @@ do
     fi
 while true
 do
-echo "how many cols is your table? "
+echo "How many columns in your table? "
 read coln
   if [[ $coln =~ ^[0-9]$ ]]; then
   break;
@@ -36,20 +36,20 @@ hdata="ColName"$sep"Type"$sep"key"
     do
         while true 
         do
-        echo "Col No $counter name:"
+        echo "Column No $counter name:"
         read colname
         if [[ $colname =~ ^[a-z|A-Z]+$ ]]; then
         break;
         fi
         done
 
-        echo "Col No $counter Type:"
+        echo "Column No $counter Type:"
         select T in "int" "string"
         do
              case $T in 
                 int ) coltype="int";break ;;
                 string ) coltype="string";break ;;
-                * ) echo "invalid choice, pick again" ;;
+                * ) echo "invalid choice, pick again " ;;
             esac
         done
 
@@ -64,7 +64,7 @@ hdata="ColName"$sep"Type"$sep"key"
              no )
              hdata+=$lsep$colname$sep$coltype$sep""
               break;;
-             * ) echo "Wrong Choice, pick again" ;;
+             * ) echo "Wrong Choice, pick again " ;;
             esac
             done
         else
@@ -83,26 +83,26 @@ hdata="ColName"$sep"Type"$sep"key"
   echo -e $temp >> ./databases/$1/$tblname 
   if [[ $? == 0 ]]
     then
-              echo "Table Created successively"
+              echo "Table Created succesefully"
               temp="";  # empty the var so if another table to be inserted the data dont be overlapped
-              select x in "create new table" "go to table menu"
+              select x in "Create new table " "Go to table menu "
               do
               case $REPLY in 
               1 ) . ./CreateTable.sh $1 ;;
               2 ) . ./connectdb.sh $1 ;;
-              * ) echo "invalid choice pick again"
+              * ) echo "Invalid choice pick again "
               esac
               done
 
     
   else
-    echo "Error creating table"
-              select x in "Try again" "go to table menu"
+    echo "Error creating table "
+              select x in "Try again " "go to table menu "
               do
               case $REPLY in 
               1 ) . ./CreateTable.sh $1 ;;
               2 ) . ./connectdb.sh $1 ;;
-              * ) echo "invalid choice pick again"
+              * ) echo "invalid choice pick again "
               esac
               done
   fi
