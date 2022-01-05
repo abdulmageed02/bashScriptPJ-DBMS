@@ -64,22 +64,7 @@ for ((i = 2; i <= $coln; i++)); do
     done
   fi
 
-  #}
-  #intcheck
-  #String Validation
-  #function strcheck {
-  if [[ $coltype == "string" ]]; then
-    while ! [[ $data =~ ^[a-z|A-Z]+$ || -z $data ]]; do
-      echo -e "invalid DataType !!"
-      echo -e "$colname ($coltype) = \c"
-      read data
-    done
-  fi
 
-  #strcheck
-
-  # Primary key validation
-  #function pkcheck {
 
   #inserting rows into database
   if [[ $i == $coln ]]; then
