@@ -33,52 +33,54 @@ read name
                                 read NewV
 ###################################################  New value validation checking either its string or int also checking on pk as new value
 HN=$FIELDN+1
-type=$( awk 'BEGIN{FS="|"}{if(NR=='$HN') print $2}' ./databases/$1/.$tblname)
- if [[ $type == "int" ]]; then
-     while ! [[ $NewV =~ ^[1-9]*$ || -z $NewV  ]]; do
-       echo -e "invalid DataType !!"
-        echo -e "insert new value for the current col value: "
-             read NewV
-      done
-   fi
-###################################
-   if [[ $type == "string" ]]; then
-     while ! [[ $NewV =~ ^[a-z|A-Z]+$ || -z $NewV ]]; do
-       echo -e "invalid DataType !!"
-       echo -e "insert new value for the current col value: "
-             read NewV
-      done
-   fi
-   ###########################
-   Key=$( awk 'BEGIN{FS="|"}{if(NR=='$HN') print $3}' ./databases/$1/.$tblname)
-    if [[ $Key == "PK" ]]; then
-      PKC=""
-            while [[ -z $PKC ]] ; do
-            
-            FN=$(awk 'BEGIN{FS="|"}{ for( i=1;i<=NF;i++) {if($i=="'$NewV'"){print i;break;}}}' ./databases/$1/$tblname)
-            
-            if [[ ! -z $FN ]];then
-            PKC=$(cut -d "|" -f $FN ./databases/$1/$tblname | grep $NewV) 
-           
-                if [[  $NewV == $PKC ]];then
-                    echo " duplicated primary key, please insert new value"
-                     echo -e "insert new value for the current col value: "
-                        read NewV
-                    PKC=""
-                  else
-                  break 2;
-                fi
-                else
-              break;
+coltype=$( awk 'BEGIN{FS="|"}{if(NR=='$HN') print $2}' ./databases/$1/.$tblname)
+colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$HN') print $3}' ./databases/$1/.$tblname)
+
+ if [[ $coltype == "int" ]]; then
+    while true; do
+      case $NewV in
+
+      +([0-9]))
+        if [[ "$colKey" == "PK" ]]; then
+          duplicated=0
+          while [[ true ]]; do
+            if [[ -z "$NewV" ]]; then
+              echo "Error!PK can't be NULL !"
+              read -p "Enter valid Primary key" NewV
+
+            elif
+              ! [[ $NewV =~ ^[1-9][0-9]*$ ]]
+            then
+              echo -e "ErrorInvalid data type!  "
+              read -p "Enter valid data type" NewV
+
+            else
+              duplicated=$(awk -F'|' '{if('$NewV'==$('$HN'-1)) {print $('$HN'-1);exit}}' ./databases/$1/$tblname)
+              if ! [[ $duplicated -eq 0 ]]; then
+                echo "Error!PK already exists"
+                read -p "Enter unique Primary key" NewV
+                duplicated=0
+              else
+                break
+              fi
             fi
           done
-      fi
-
+        fi
+        break
+        ;;
+      *)
+        echo "Error! Invalid data type!"
+        read -p "enter valid data type (int)" NewV
+        ;;
+      esac
+    done
+  fi
 ####################################################
                                 RECORDN=$(awk 'BEGIN{FS="|"}{for( i=1;i<=NF;i++) if($i=="'$colv'" && i=="'$FIELDN'") {print NR}}' ./databases/$1/$name) 
                                 OldV=$(awk 'BEGIN{FS="|"}{if(NR=='$RECORDN'){for(i=1;i<=NF;i++){if(i=='$FIELDN') print $i}}}'   ./databases/$1/$name) 
-                                echo $oldValue
+                                #echo $oldValue
                                 sed -i ''$RECORDN's/'$OldV'/'$NewV'/g' ./databases/$1/$name
+                                #echo $RECORDN - $OldV - $NewV
                                 echo "Row Updated Successfully"
                                  . ./connectdb.sh $1
                         else
