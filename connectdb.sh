@@ -3,6 +3,7 @@
 while [ true ]
 do 
 if [[ $# == 0 ]];then
+    ls databases
     echo "enter the database name"
     read dbname
     else
@@ -12,7 +13,7 @@ if [[ $# == 0 ]];then
 if [ -d ./databases/$dbname ];
          then
             echo " current database is $dbname"
-            select choice in 'Create table' 'List tables' 'insert into table' 'Drop table' 'select & update/delete from table' 'list table data'  'choose another database' 'go to main menu'
+            select choice in 'Create table' 'List tables' 'insert into table' 'Drop table' 'select  from table' 'list table data'  'update rec' 'delete from rec' 'choose another database' 'go to main menu'
             do
             case $REPLY in
             1 ) . ./CreateTable.sh $dbname
@@ -27,6 +28,8 @@ if [ -d ./databases/$dbname ];
             ;;
             6 ) . ./listtabledata.sh $dbname
             ;;
+            7 ) . ./update.sh $dbname ;;
+            8 ) . ./Delrec.sh $dbname ;;
             9 ) . ./connectdb.sh
             ;;
             10 ) . ./maindb.sh
