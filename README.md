@@ -27,6 +27,7 @@ Table Operations:
 ## How To Use:
 ```sh
 $ ./maindb.sh
+    then navigate through the menus
 ```
 ## Keep in mind:
 ```
