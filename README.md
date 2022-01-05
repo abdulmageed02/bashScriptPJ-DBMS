@@ -1,4 +1,4 @@
-# Database Engine USING BASH Script
+# Database Engine Using BASH Script
 
 Database engine that handles simple CRUD tasks on data stored in text files
 
