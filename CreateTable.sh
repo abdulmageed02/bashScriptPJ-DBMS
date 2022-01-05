@@ -53,7 +53,7 @@ hdata="ColName"$sep"Type"$sep"key"
             esac
         done
 
-        if [[ $PK == "" ]]; then
+        if [[ $PK == "" && $coltype == "int" ]]; then
             echo -e "Make this col a PrimaryKey ? "
             select var in "yes" "no"
             do
