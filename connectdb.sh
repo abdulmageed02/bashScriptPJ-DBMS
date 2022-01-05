@@ -3,7 +3,7 @@
 while [ true ]
 do 
 if [[ $# == 0 ]];then
-    ls databases
+    ls databases 2>/dev/null
     echo "enter the database name"
     read dbname
     else
