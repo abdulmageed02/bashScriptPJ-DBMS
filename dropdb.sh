@@ -5,7 +5,7 @@ ls databases
 echo "enter the database name"
 read dbname
 
-if [ -d ./databases/$dbname ];
+if [[ -d ./databases/$dbname && ! -z $dbname ]];
          then
             rm -r ./databases/$dbname  
             echo "database Deleted !";
