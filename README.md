@@ -35,14 +35,14 @@ $ ./maindb.sh
 
 ## Keep in mind:
 
-- you cant use columns with string data type as your primary key
-- you cant insert duplicated primary key or Null primary key
-- you wont be able to select or update null values
+- you can't use columns with string data type as your primary key
+- you can't insert duplicated primary key or Null primary key
+- you won't be able to select or update null values
 - you can enter null values if its string
-- you cant insert null values for int columns (use 0 if u want to insert an int as null)
-- you cant insert 0 for the PK
+- you can't insert null values for int columns (use 0 if u want to insert an int as null)
+- you can't insert 0 for the PK
 
 ## Contributors:
 
-- [Hossam Abdulmageed](https://github.com/abdulmageed02)
 - [Abdelrahman Nabil](https://github.com/AbdelrahmanNabill)
+- [Hossam Abdulmageed](https://github.com/abdulmageed02)
