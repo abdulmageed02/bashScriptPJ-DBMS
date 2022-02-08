@@ -43,6 +43,6 @@ $ ./maindb.sh
 - you can't insert 0 for the PK
 
 ## Contributors:
-
-- [Abdelrahman Nabil](https://github.com/AbdelrahmanNabill)
 - [Hossam Abdulmageed](https://github.com/abdulmageed02)
+- [Abdelrahman Nabil](https://github.com/AbdelrahmanNabill)
+
